@@ -1,6 +1,6 @@
 package com.thiagosena.springkotlinbackend.wrappers.response
 
-class PersonResponse(
+data class PersonResponse(
     val id: Long,
     val email: String,
     val fullName: String,

@@ -3,7 +3,7 @@ package com.thiagosena.springkotlinbackend.models
 import java.math.BigDecimal
 import java.time.LocalDate
 
-class DomesticBill(
+data class DomesticBill(
     var id: Long,
     var description: String,
     var dueDate: LocalDate,

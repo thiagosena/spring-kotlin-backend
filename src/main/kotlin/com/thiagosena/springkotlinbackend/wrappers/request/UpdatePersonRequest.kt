@@ -1,6 +1,6 @@
 package com.thiagosena.springkotlinbackend.wrappers.request
 
-class UpdatePersonRequest(
+data class UpdatePersonRequest(
     val id: Long,
     val firstName: String,
     val lastName: String,

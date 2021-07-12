@@ -21,7 +21,7 @@ class Person(
     @SequenceGenerator(name = PERSON_SEQUENCE, sequenceName = PERSON_SEQUENCE, allocationSize = 1)
     @GeneratedValue(strategy = SEQUENCE, generator = PERSON_SEQUENCE)
     @Column(name = "id")
-    var id: Long = 0,
+    val id: Long = 0,
 
     @NotNull
     @Size(min = 2, max = 128)
@@ -36,7 +36,7 @@ class Person(
     @NotNull
     @Email
     @Column(name = "email")
-    var email: String = "",
+    var email: String,
 
     @Column(name = "created_at", columnDefinition = "timestamp")
     val createdAt: LocalDateTime = LocalDateTime.now(),

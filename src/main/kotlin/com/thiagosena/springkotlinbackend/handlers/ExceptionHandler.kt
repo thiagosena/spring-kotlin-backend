@@ -1,5 +1,7 @@
 package com.thiagosena.springkotlinbackend.handlers
 
+import com.thiagosena.springkotlinbackend.wrappers.response.error.ErrorMessage
+import com.thiagosena.springkotlinbackend.wrappers.response.error.ErrorResponse
 import javax.persistence.EntityNotFoundException
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.ResponseEntity
