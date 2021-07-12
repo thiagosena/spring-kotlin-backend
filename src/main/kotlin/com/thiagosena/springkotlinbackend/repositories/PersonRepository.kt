@@ -10,4 +10,6 @@ interface PersonRepository : JpaRepository<Person, Long> {
 //    fun search(filter: String, sort: Sort): MutableIterable<Person>
 
     fun findAllByFirstName(name: String, pageable: Pageable?): Page<Person>
+
+    fun findByEmail(email: String?): Person?
 }
