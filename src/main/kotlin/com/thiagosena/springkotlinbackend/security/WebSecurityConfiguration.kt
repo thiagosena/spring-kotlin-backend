@@ -25,7 +25,14 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
         http
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/signup").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/persons").permitAll()
+            .antMatchers(
+                "/api-docs/**",
+                "/actuator/**",
+                "/swagger-ui-custom.html",
+                "/swagger-ui/**",
+                "/webjars/**"
+            ).permitAll()
             .anyRequest().authenticated()
         http.addFilter(JWTAuthenticationFilter(authenticationManager(), jwtUtil = jwtUtil))
         http.addFilter(
@@ -38,6 +45,11 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
+    /**
+     * Password encryption algorithm
+     *
+     * @return
+     */
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
         return BCryptPasswordEncoder()

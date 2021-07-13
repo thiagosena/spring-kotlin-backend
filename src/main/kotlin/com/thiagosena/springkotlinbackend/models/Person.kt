@@ -42,7 +42,7 @@ class Person(
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "updated_at", columnDefinition = "timestamp")
-    var updatedAt: LocalDateTime? = null
+    var updatedAt: LocalDateTime? = null,
 ) {
     @NotNull
     var password: String = ""

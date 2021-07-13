@@ -9,7 +9,11 @@ interface PersonRepository : JpaRepository<Person, Long> {
 //    @Query("select p from #{#entityName} p where p.name like %:filter%")
 //    fun search(filter: String, sort: Sort): MutableIterable<Person>
 
-    fun findAllByFirstName(name: String, pageable: Pageable?): Page<Person>
+    fun findAllByFirstNameIgnoreCaseOrLastNameIgnoreCase(
+        firstname: String,
+        lastname: String,
+        pageable: Pageable?
+    ): Page<Person>
 
     fun findByEmail(email: String?): Person?
 }

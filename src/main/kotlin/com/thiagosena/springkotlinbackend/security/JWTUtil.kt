@@ -43,6 +43,6 @@ class JWTUtil {
     }
 
     companion object {
-        const val expiration: Long = 60000L
+        const val expiration: Long = 300000L // 5min
     }
 }
