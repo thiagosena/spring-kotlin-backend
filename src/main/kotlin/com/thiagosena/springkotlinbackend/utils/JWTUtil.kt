@@ -35,7 +35,11 @@ class JWTUtil {
     }
 
     private fun getClaimsToken(token: String): Claims? =
-        Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(token).body
+        try {
+            Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(token).body
+        } catch (e: Exception) {
+            null
+        }
 
     fun getUserName(token: String): String? {
         val claims = getClaimsToken(token)

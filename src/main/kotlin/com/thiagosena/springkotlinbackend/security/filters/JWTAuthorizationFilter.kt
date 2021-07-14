@@ -54,7 +54,7 @@ class JWTAuthorizationFilter(
     }
 
     private fun getAuthentication(authorizationHeader: String): UsernamePasswordAuthenticationToken {
-        val token = authorizationHeader.substring(startIndex)
+        val token = authorizationHeader.substring(7)
         if (jwtUtil.isTokenValid(token)) {
             val username = jwtUtil.getUserName(token)
             val user = userDetailService.loadUserByUsername(username)
@@ -64,7 +64,4 @@ class JWTAuthorizationFilter(
         throw UsernameNotFoundException("Auth invalid!")
     }
 
-    companion object {
-        const val startIndex = 7
-    }
 }

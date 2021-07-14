@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.thiagosena.springkotlinbackend.AUTHORIZATION
 import com.thiagosena.springkotlinbackend.BEARER
 import com.thiagosena.springkotlinbackend.models.Credentials
-import com.thiagosena.springkotlinbackend.models.UserDetailsImpl
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse

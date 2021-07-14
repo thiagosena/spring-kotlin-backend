@@ -1,7 +1,7 @@
 package com.thiagosena.springkotlinbackend.services.impl
 
-import com.thiagosena.springkotlinbackend.models.UserDetailsImpl
 import com.thiagosena.springkotlinbackend.repositories.PersonRepository
+import com.thiagosena.springkotlinbackend.security.UserDetailsImpl
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException

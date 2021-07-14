@@ -1,5 +1,6 @@
-package com.thiagosena.springkotlinbackend.models
+package com.thiagosena.springkotlinbackend.security
 
+import com.thiagosena.springkotlinbackend.models.Person
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
