@@ -1,5 +1,6 @@
 package com.thiagosena.springkotlinbackend.security
 
+import com.thiagosena.springkotlinbackend.handlers.CustomAuthenticationHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -11,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.AuthenticationEntryPoint
+
 
 @Configuration
 @EnableWebSecurity
@@ -34,6 +37,8 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
                 "/webjars/**"
             ).permitAll()
             .anyRequest().authenticated()
+            .and()
+            .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
         http.addFilter(JWTAuthenticationFilter(authenticationManager(), jwtUtil = jwtUtil))
         http.addFilter(
             JWTAuthorizationFilter(
@@ -45,15 +50,11 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
-    /**
-     * Password encryption algorithm
-     *
-     * @return
-     */
     @Bean
-    fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+    fun bCryptPasswordEncoder() = BCryptPasswordEncoder()
+
+    @Bean
+    fun authenticationEntryPoint(): AuthenticationEntryPoint = CustomAuthenticationHandler()
 
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder())

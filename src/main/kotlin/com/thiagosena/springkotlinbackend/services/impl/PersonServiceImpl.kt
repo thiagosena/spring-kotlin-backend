@@ -1,12 +1,12 @@
 package com.thiagosena.springkotlinbackend.services.impl
 
 import com.thiagosena.springkotlinbackend.models.Person
+import com.thiagosena.springkotlinbackend.payload.request.AddPersonRequest
+import com.thiagosena.springkotlinbackend.payload.request.UpdatePersonRequest
+import com.thiagosena.springkotlinbackend.payload.response.PersonResponse
 import com.thiagosena.springkotlinbackend.repositories.PersonRepository
 import com.thiagosena.springkotlinbackend.services.PersonService
 import com.thiagosena.springkotlinbackend.transformer.AddPersonRequestTransformer
-import com.thiagosena.springkotlinbackend.wrappers.request.AddPersonRequest
-import com.thiagosena.springkotlinbackend.wrappers.request.UpdatePersonRequest
-import com.thiagosena.springkotlinbackend.wrappers.response.PersonResponse
 import java.time.LocalDateTime
 import javax.persistence.EntityNotFoundException
 import org.springframework.data.domain.Page

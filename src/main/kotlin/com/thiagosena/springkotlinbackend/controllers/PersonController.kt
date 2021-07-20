@@ -1,16 +1,17 @@
 package com.thiagosena.springkotlinbackend.controllers
 
+import com.thiagosena.springkotlinbackend.payload.request.AddPersonRequest
+import com.thiagosena.springkotlinbackend.payload.request.UpdatePersonRequest
+import com.thiagosena.springkotlinbackend.payload.response.PersonResponse
+import com.thiagosena.springkotlinbackend.payload.response.error.ErrorResponse
 import com.thiagosena.springkotlinbackend.services.PersonService
-import com.thiagosena.springkotlinbackend.wrappers.request.AddPersonRequest
-import com.thiagosena.springkotlinbackend.wrappers.request.UpdatePersonRequest
-import com.thiagosena.springkotlinbackend.wrappers.response.PersonResponse
-import com.thiagosena.springkotlinbackend.wrappers.response.error.ErrorResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import javax.validation.Valid
 import org.springframework.data.domain.Page
@@ -33,7 +34,12 @@ import org.springframework.web.bind.annotation.RestController
 class PersonController(private val service: PersonService) {
 
     @GetMapping("/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    @Operation(summary = "Get person object by id", description = "Get person by id", tags = ["person"])
+    @Operation(
+        summary = "Get person object by id",
+        description = "Get person by id",
+        tags = ["person"],
+        security = [SecurityRequirement(name = "bearer-key")]
+    )
     @ApiResponses(
         value = [
             ApiResponse(
@@ -74,7 +80,29 @@ class PersonController(private val service: PersonService) {
     @Operation(
         summary = "Get all persons with pageable",
         description = "Get all persons with pageable",
-        tags = ["persons"]
+        tags = ["persons"],
+        security = [SecurityRequirement(name = "bearer-key")],
+        parameters = [
+            Parameter(
+                name = "page", description = "Page you want to retrieve (0..n)", content = [
+                    Content(schema = Schema(type = "integer", defaultValue = "0"))
+                ]
+            ),
+            Parameter(
+                name = "size", description = "Number of records per page.", content = [
+                    Content(schema = Schema(type = "integer", defaultValue = "20"))
+                ]
+            ),
+            Parameter(
+                name = "sort",
+                description = "Sorting criteria in the format: property(asc|desc). " +
+                        "Default sort order is ascending. " +
+                        "Multiple sort criteria are supported.",
+                content = [
+                    Content(schema = Schema(type = "string"))
+                ]
+            ),
+        ]
     )
     @ApiResponses(
         value = [
@@ -96,14 +124,43 @@ class PersonController(private val service: PersonService) {
             ),
         ]
     )
-    fun findAll(pageable: Pageable): ResponseEntity<Page<PersonResponse>> =
+    fun findAll(
+        @Parameter(
+            description = "Ignored because swagger ui shows the wrong params, " +
+                    "instead they are explained in the implicit params",
+            hidden = true
+        )
+        pageable: Pageable
+    ): ResponseEntity<Page<PersonResponse>> =
         ResponseEntity.ok(this.service.findAll(pageable))
 
     @GetMapping("search", consumes = [MediaType.APPLICATION_JSON_VALUE])
     @Operation(
         summary = "Find persons by first or last name with pageable",
         description = "Get persons filtered by first or last name with pageable",
-        tags = ["persons"]
+        tags = ["persons"],
+        security = [SecurityRequirement(name = "bearer-key")],
+        parameters = [
+            Parameter(
+                name = "page", description = "Page you want to retrieve (0..n)", content = [
+                    Content(schema = Schema(type = "integer", defaultValue = "0"))
+                ]
+            ),
+            Parameter(
+                name = "size", description = "Number of records per page.", content = [
+                    Content(schema = Schema(type = "integer", defaultValue = "20"))
+                ]
+            ),
+            Parameter(
+                name = "sort",
+                description = "Sorting criteria in the format: property(asc|desc). " +
+                        "Default sort order is ascending. " +
+                        "Multiple sort criteria are supported.",
+                content = [
+                    Content(schema = Schema(type = "string"))
+                ]
+            ),
+        ]
     )
     @ApiResponses(
         value = [
@@ -131,6 +188,11 @@ class PersonController(private val service: PersonService) {
             required = true
         )
         @RequestParam filter: String,
+        @Parameter(
+            description = "Ignored because swagger ui shows the wrong params, " +
+                    "instead they are explained in the implicit params",
+            hidden = true
+        )
         pageable: Pageable
     ): ResponseEntity<Page<PersonResponse>> = ResponseEntity.ok(this.service.search(filter, pageable))
 
@@ -138,7 +200,8 @@ class PersonController(private val service: PersonService) {
     @Operation(
         summary = "Register a person",
         description = "Register a person",
-        tags = ["person"]
+        tags = ["person"],
+        security = [SecurityRequirement(name = "bearer-key")]
     )
     @ApiResponses(
         value = [
@@ -188,7 +251,8 @@ class PersonController(private val service: PersonService) {
     @Operation(
         summary = "Update person",
         description = "Update person",
-        tags = ["person"]
+        tags = ["person"],
+        security = [SecurityRequirement(name = "bearer-key")]
     )
     @ApiResponses(
         value = [

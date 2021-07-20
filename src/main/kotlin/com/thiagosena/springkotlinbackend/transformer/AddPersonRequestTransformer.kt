@@ -1,7 +1,7 @@
 package com.thiagosena.springkotlinbackend.transformer
 
 import com.thiagosena.springkotlinbackend.models.Person
-import com.thiagosena.springkotlinbackend.wrappers.request.AddPersonRequest
+import com.thiagosena.springkotlinbackend.payload.request.AddPersonRequest
 import org.springframework.stereotype.Component
 
 @Component

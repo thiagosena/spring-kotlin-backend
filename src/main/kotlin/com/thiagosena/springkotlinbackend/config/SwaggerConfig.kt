@@ -4,14 +4,18 @@ import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Contact
 import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.security.SecurityScheme
+import java.util.Optional
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.info.BuildProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("app.api")
+@ConfigurationProperties("info.app")
 class SwaggerConfig(
     var version: String? = null,
     var title: String? = null,
@@ -21,13 +25,25 @@ class SwaggerConfig(
     var contactEmail: String? = null
 ) {
 
+    @Autowired
+    lateinit var build: Optional<BuildProperties>
+
     @Bean
     fun customOpenApi(): OpenAPI =
-        OpenAPI().components(Components()).info(
+        OpenAPI().components(
+            Components()
+                .addSecuritySchemes(
+                    "bearer-key",
+                    SecurityScheme()
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")
+                )
+        ).info(
             Info()
                 .title(title)
                 .description(description)
-                .version(version)
+                .version(build.get().version)
                 .contact(Contact().name(contactName).email(contactEmail).url(contactUrl))
         )
 }

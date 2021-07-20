@@ -1,6 +1,6 @@
 package com.thiagosena.springkotlinbackend.models
 
-import com.thiagosena.springkotlinbackend.wrappers.response.PersonResponse
+import com.thiagosena.springkotlinbackend.payload.response.PersonResponse
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Entity

@@ -1,4 +1,4 @@
-package com.thiagosena.springkotlinbackend.wrappers.response.error
+package com.thiagosena.springkotlinbackend.payload.response.error
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING

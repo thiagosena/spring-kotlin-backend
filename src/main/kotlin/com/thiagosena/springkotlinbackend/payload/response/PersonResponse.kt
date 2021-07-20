@@ -1,4 +1,4 @@
-package com.thiagosena.springkotlinbackend.wrappers.response
+package com.thiagosena.springkotlinbackend.payload.response
 
 import io.swagger.v3.oas.annotations.media.Schema
 

@@ -1,9 +1,9 @@
 package com.thiagosena.springkotlinbackend.services
 
+import com.thiagosena.springkotlinbackend.payload.response.PersonResponse
 import com.thiagosena.springkotlinbackend.repositories.PersonRepository
 import com.thiagosena.springkotlinbackend.services.impl.PersonServiceImpl
 import com.thiagosena.springkotlinbackend.transformer.AddPersonRequestTransformer
-import com.thiagosena.springkotlinbackend.wrappers.response.PersonResponse
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

@@ -4,16 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.thiagosena.springkotlinbackend.AUTHORIZATION
 import com.thiagosena.springkotlinbackend.BEARER
-import com.thiagosena.springkotlinbackend.wrappers.response.error.ErrorMessage
-import com.thiagosena.springkotlinbackend.wrappers.response.error.ErrorResponse
-import io.jsonwebtoken.ExpiredJwtException
+import com.thiagosena.springkotlinbackend.security.commons.ErrorUtils
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus.UNAUTHORIZED
-import org.springframework.http.MediaType
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -37,19 +35,8 @@ class JWTAuthorizationFilter(
             }
 
             chain.doFilter(request, response)
-        } catch (e: ExpiredJwtException) {
-            val responseEntity = ErrorResponse(
-                ErrorMessage(
-                    e.localizedMessage,
-                    UNAUTHORIZED,
-                    UNAUTHORIZED.value()
-                )
-            )
-
-            objectMapper.findAndRegisterModules()
-            response.contentType = MediaType.APPLICATION_JSON_VALUE
-            response.status = HttpServletResponse.SC_UNAUTHORIZED
-            response.writer.write(objectMapper.writeValueAsString(responseEntity))
+        } catch (e: AuthenticationException) {
+            ErrorUtils.getErrorMessage(e.localizedMessage, response, objectMapper, UNAUTHORIZED)
         }
     }
 
@@ -61,7 +48,6 @@ class JWTAuthorizationFilter(
                 ?: throw UsernameNotFoundException("User not found")
             return UsernamePasswordAuthenticationToken(user, null, user.authorities)
         }
-        throw UsernameNotFoundException("Auth invalid!")
+        throw UsernameNotFoundException("Authorization invalid!")
     }
-
 }

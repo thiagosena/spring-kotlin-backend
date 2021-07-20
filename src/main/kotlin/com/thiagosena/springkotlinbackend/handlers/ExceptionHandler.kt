@@ -1,7 +1,7 @@
 package com.thiagosena.springkotlinbackend.handlers
 
-import com.thiagosena.springkotlinbackend.wrappers.response.error.ErrorMessage
-import com.thiagosena.springkotlinbackend.wrappers.response.error.ErrorResponse
+import com.thiagosena.springkotlinbackend.payload.response.error.ErrorMessage
+import com.thiagosena.springkotlinbackend.payload.response.error.ErrorResponse
 import javax.persistence.EntityNotFoundException
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.NOT_FOUND
@@ -25,8 +25,8 @@ class ExceptionHandler {
         )
     }
 
-    @ExceptionHandler(IllegalStateException::class)
-    fun handleIllegalStateException(ex: IllegalStateException): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(IllegalStateException::class, IllegalArgumentException::class)
+    fun handleIllegalStateException(ex: RuntimeException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.badRequest().body(
             ErrorResponse(
                 ErrorMessage(

@@ -1,8 +1,8 @@
 package com.thiagosena.springkotlinbackend.services
 
-import com.thiagosena.springkotlinbackend.wrappers.request.AddPersonRequest
-import com.thiagosena.springkotlinbackend.wrappers.request.UpdatePersonRequest
-import com.thiagosena.springkotlinbackend.wrappers.response.PersonResponse
+import com.thiagosena.springkotlinbackend.payload.request.AddPersonRequest
+import com.thiagosena.springkotlinbackend.payload.request.UpdatePersonRequest
+import com.thiagosena.springkotlinbackend.payload.response.PersonResponse
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 

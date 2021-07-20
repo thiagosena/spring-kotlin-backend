@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-
 plugins {
     id("org.springframework.boot") version "2.5.2"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
@@ -9,10 +8,19 @@ plugins {
     kotlin("plugin.jpa") version "1.5.20"
 }
 
-group = "com.thiagosena"
-version = project.version
-description = project.description
 java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+springBoot {
+    buildInfo {
+        properties {
+            artifact = "spring-kotlin-backend"
+            version = "1.0.0"
+            group = "com.thiagosena"
+            name = "Spring Boot with Kotlin Application APIs"
+            description = "Currency converter project and help with domestic bill"
+        }
+    }
+}
 
 repositories {
     mavenCentral()
