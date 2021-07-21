@@ -10,8 +10,11 @@ import org.springframework.stereotype.Component
 @Component
 class JWTUtil {
 
-    @Value("\${jwt.secret}")
+    @Value("\${app.jwtSecret}")
     private lateinit var secret: String
+
+    @Value("\${app.jwtExpirationMs}")
+    private var expiration: Long = 0L
 
     fun generateToken(username: String): String {
         return Jwts.builder()
@@ -35,18 +38,10 @@ class JWTUtil {
     }
 
     private fun getClaimsToken(token: String): Claims? =
-        try {
-            Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(token).body
-        } catch (e: Exception) {
-            null
-        }
+        Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(token).body
 
     fun getUserName(token: String): String? {
         val claims = getClaimsToken(token)
         return claims?.subject
-    }
-
-    companion object {
-        const val expiration: Long = 300000L // 5min
     }
 }

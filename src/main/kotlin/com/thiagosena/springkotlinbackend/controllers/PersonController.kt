@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "Persons", description = "Persons API")
 class PersonController(private val service: PersonService) {
 
-    @GetMapping("/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("/{id}")
     @Operation(
         summary = "Get person object by id",
         description = "Get person by id",
@@ -76,7 +76,7 @@ class PersonController(private val service: PersonService) {
         @PathVariable("id") id: Long
     ): PersonResponse? = service.findById(id)
 
-    @GetMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping
     @Operation(
         summary = "Get all persons with pageable",
         description = "Get all persons with pageable",
@@ -134,7 +134,7 @@ class PersonController(private val service: PersonService) {
     ): ResponseEntity<Page<PersonResponse>> =
         ResponseEntity.ok(this.service.findAll(pageable))
 
-    @GetMapping("search", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("search")
     @Operation(
         summary = "Find persons by first or last name with pageable",
         description = "Get persons filtered by first or last name with pageable",
@@ -196,7 +196,7 @@ class PersonController(private val service: PersonService) {
         pageable: Pageable
     ): ResponseEntity<Page<PersonResponse>> = ResponseEntity.ok(this.service.search(filter, pageable))
 
-    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping
     @Operation(
         summary = "Register a person",
         description = "Register a person",
@@ -247,7 +247,7 @@ class PersonController(private val service: PersonService) {
         @Valid @RequestBody addPersonRequest: AddPersonRequest
     ) = ResponseEntity(this.service.save(addPersonRequest), CREATED)
 
-    @PutMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PutMapping
     @Operation(
         summary = "Update person",
         description = "Update person",

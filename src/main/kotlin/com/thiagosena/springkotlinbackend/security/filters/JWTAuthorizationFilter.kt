@@ -9,19 +9,17 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus.UNAUTHORIZED
-import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.web.filter.OncePerRequestFilter
 
 class JWTAuthorizationFilter(
-    authenticationManager: AuthenticationManager,
     private var jwtUtil: JWTUtil,
     private var userDetailService: UserDetailsService
-) : BasicAuthenticationFilter(authenticationManager) {
+) : OncePerRequestFilter() {
 
     private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 

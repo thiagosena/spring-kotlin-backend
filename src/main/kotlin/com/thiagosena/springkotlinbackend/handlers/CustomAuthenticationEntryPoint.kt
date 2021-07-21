@@ -9,17 +9,17 @@ import org.springframework.http.HttpStatus.FORBIDDEN
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 
-class CustomAuthenticationHandler : AuthenticationEntryPoint {
+class CustomAuthenticationEntryPoint : AuthenticationEntryPoint {
 
     private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 
     override fun commence(
         request: HttpServletRequest?,
         response: HttpServletResponse,
-        authException: AuthenticationException?
+        authException: AuthenticationException
     ) {
         ErrorUtils.getErrorMessage(
-            "Forbidden: Authorization bearer header is required",
+            authException.localizedMessage,
             response,
             objectMapper,
             FORBIDDEN

@@ -12,6 +12,8 @@ class UserDetailsImpl(private val person: Person) : UserDetails {
 
     override fun getUsername() = person.email
 
+    fun getPersonResponse() = person.toPersonResponse()
+
     override fun isCredentialsNonExpired() = true
 
     override fun getPassword() = person.password
